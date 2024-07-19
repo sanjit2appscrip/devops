@@ -26,11 +26,10 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-
-           gh api \
+          gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /users/sanjit2appscrip/orgs
+            /users/sanjit2appscrip/orgs | jq '.[] | "\(.login): \(.description)"'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
