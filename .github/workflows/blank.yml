@@ -40,7 +40,7 @@ jobs:
             -f body='Please approve the changes.' \
             -f assignees='sanjit2appscrip'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       - name: echo github event details
         run: |
           echo ${{ github.event }}
