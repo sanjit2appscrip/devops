@@ -30,6 +30,12 @@ jobs:
       approver: ${{ steps.extract-approver.outputs.approver }}
       is_qadeployer: ${{ steps.check-approver.outputs.is_qadeployer }}
     steps:
+      - name: Wait for approval
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: sanjit2appscrip
+          minimum-approvals: 1
       - name: echo github event details
         run: |
           echo ${{ github.event }}
