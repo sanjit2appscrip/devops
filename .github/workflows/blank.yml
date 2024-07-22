@@ -33,7 +33,7 @@ jobs:
       - name: Wait for approval
         uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ github.TOKEN }}
+          secret: ${{ secrets.PAT_TOKEN }}
           approvers: sanjit2appscrip
           minimum-approvals: 1
       - name: echo github event details
