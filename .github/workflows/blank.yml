@@ -26,7 +26,6 @@ jobs:
       approver: ${{ steps.extract-approver.outputs.approver }}
       is_qadeployer: ${{ steps.check-approver.outputs.is_qadeployer }}
     steps:
-      - uses: actions/checkout@v4
       - name: echo github event details
         run: |
           echo ${{ github.event }}
