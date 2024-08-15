@@ -74,15 +74,13 @@ jobs:
           echo $team_members
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-  download-logs:
-    name: "Download Logs from Previous Jobs"
+  logs-download:
+    name: Download GH action logs
     runs-on: ubuntu-latest
     steps:
-      - name: Download logs artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: logs
-          path: ./logs
-          
-      - name: Print logs
-        run: cat ./logs/*
+      - uses: actions/checkout@v2.0.0
+      - name: Download 24hrs Old Logs
+        uses: pawanbahuguna/action-logs/@v1.0.1
+        env: 
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_REPO: ${{ github.repository }}
