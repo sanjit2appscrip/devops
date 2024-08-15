@@ -74,18 +74,29 @@ jobs:
           echo $team_members
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
   logs-download:
-    name: Download GH action logs
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.0.0
-      - name: Download 24hrs Old Logs
-        uses: pawanbahuguna/action-logs/@v1.0.1
-        env: 
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-      - uses: actions/checkout@v2.0.0
-      - name: get Old Logs
-        run: |
-           ls
-           ls -all 
+         runs-on: ubuntu-latest
+         steps: 
+         - name: Download Workflow Logs
+           run: |
+            curl -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              -o workflow_logs.zip \
+              https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/logs
+ #   name: Download GH action logs
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2.0.0
+  #     - name: Download 24hrs Old Logs
+  #       uses: pawanbahuguna/action-logs/@v1.0.1
+  #       env: 
+  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  #         GH_REPO: ${{ github.repository }}
+  #     - uses: actions/checkout@v2.0.0
+  #     - name: get Old Logs
+  #       run: |
+  #          ls
+  #          ls -all 
