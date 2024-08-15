@@ -84,3 +84,8 @@ jobs:
         env: 
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GH_REPO: ${{ github.repository }}
+      - uses: actions/checkout@v2.0.0
+      - name: get Old Logs
+        run: |
+           ls
+           ls -all 
