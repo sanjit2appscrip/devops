@@ -89,7 +89,8 @@ jobs:
          - name: get logs
            run: |
               ls -all
-              cat workflow_logs.zip
+              cd workflow_logs.zip
+              ls -all
            #   name: Download GH action logs
   #   runs-on: ubuntu-latest
   #   steps:
