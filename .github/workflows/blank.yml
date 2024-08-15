@@ -74,3 +74,15 @@ jobs:
           echo $team_members
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+  download-logs:
+    name: "Download Logs from Previous Jobs"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download logs artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: logs
+          path: ./logs
+          
+      - name: Print logs
+        run: cat ./logs/*
