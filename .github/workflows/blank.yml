@@ -86,9 +86,12 @@ jobs:
                 GH_TOKEN: ${{ secrets.GIT_TOKEN }}
                 GH_REPO: ${{ github.repository }}
                 LOGS_DIR: logs
+                ONLY_24: "false"
+                GITHUB_RUN_ID: ${{ github.run_id }}
             - name: get logs
               run: |
                  ls -all
+                 cat logs
                  
            #   name: Download GH action logs
   #   runs-on: ubuntu-latest
