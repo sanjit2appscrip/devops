@@ -78,8 +78,6 @@ jobs:
   logs-download:
          runs-on: ubuntu-latest
          steps: 
-         - name: echo github
-           run: ${{ github.run_id }}
          - name: Download Workflow Logs
            run: |
             curl -L \
