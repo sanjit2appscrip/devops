@@ -84,6 +84,8 @@ jobs:
                 -H "Accept: application/vnd.github+json" \
                 -H "X-GitHub-Api-Version: 2022-11-28" \
                  /repos/sanjit2appscrip/devops.git/actions/runs/${{ github.run_id }}/logs
+           env:
+             GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
             
 
          - name: get logs
