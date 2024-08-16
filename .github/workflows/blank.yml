@@ -88,6 +88,9 @@ jobs:
                 LOGS_DIR: logs
                 ONLY_24: false
                 GITHUB_RUN_ID: ${{ github.run_id }}
+                run_id: ${{ github.run_id }}           # Replace with actual run ID
+                log_type: 'all'                   # or 'job' or 'step', based on your needs
+                download_path: './logs'
             - name: get logs
               run: |
                  ls -all
