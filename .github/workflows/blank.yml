@@ -78,12 +78,15 @@ jobs:
   logs-download:
          runs-on: ubuntu-latest
          steps: 
-
-          uses: pawanbahuguna/action-logs@v1.1.0
-          with:
-            token: ${{ secrets.GIT_TOKEN }}
-            days-old: 1
-            directory: logs
+            - name: Checkout Code
+              uses: actions/checkout@v3
+        
+            - name: Download GitHub Action Logs
+              uses: pawanbahuguna/action-logs@v1.1.0
+              with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+                days-old: 1
+                directory: logs
             
 
            #   name: Download GH action logs
