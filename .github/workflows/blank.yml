@@ -1,4 +1,3 @@
-
 name: CI
 
 # Controls when the workflow will run
@@ -77,25 +76,22 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
   logs-download:
-          runs-on: ubuntu-latest
-          steps:
-            - uses: actions/checkout@v2.0.0
-            - name: Download 24hrs Old Logs
-              uses: pawanbahuguna/action-logs/@v1.0.1
-              env: 
-                GH_TOKEN: ${{ secrets.GIT_TOKEN }}
-                GH_REPO: ${{ github.repository }}
-                LOGS_DIR: logs
-                ONLY_24: false
-                GITHUB_RUN_ID: ${{ github.run_id }}
-                run_id: ${{ github.run_id }}           # Replace with actual run ID
-                log_type: 'all'                   # or 'job' or 'step', based on your needs
-                download_path: './logs'
-            - name: get logs
-              run: |
-                 ls -all
-                 cat file
-                 cat file1                 
+         runs-on: ubuntu-latest
+         steps: 
+         - name: Wait for Logs to be Available
+           run: sleep 60
+         - name: Download Workflow Logs
+           run: |
+            curl -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              -o workflow_logs.txt \
+              https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/actions/runs/${{ github.run_id }}/logs
+         - name: get logs
+           run: |
+              ls -all
+              cat workflow_logs.txt
            #   name: Download GH action logs
   #   runs-on: ubuntu-latest
   #   steps:
