@@ -77,8 +77,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
   logs-download:
-         runs-on: ubuntu-latest
-         steps: 
+    runs-on: ubuntu-latest
+    steps: 
          - name: get 
            run: |
                response=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -90,6 +90,7 @@ jobs:
     
                echo "Job ID for '${job_name}': $job_id"
                echo "JOB_ID=$job_id" >> $GITHUB_ENV
+               
          - name: Download Workflow Logs
            run: |
            
@@ -103,7 +104,6 @@ jobs:
               ls -all
               cat workflow_logs.txt
               job_name="your-job-name"  # Replace with your job name
-          job_id=$(echo "$response" | jq -r ".jobs[] | select(.name == \"$job_name\") | .id")
          - name: restart
            run: |
              curl -L \
