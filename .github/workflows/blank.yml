@@ -78,8 +78,6 @@ jobs:
   logs-download:
          runs-on: ubuntu-latest
          steps: 
-         - name: Wait for Logs to be Available
-           run: sleep 60
          - name: Download Workflow Logs
            run: |
             curl -H "Accept: application/vnd.github+json" \
