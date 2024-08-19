@@ -82,8 +82,7 @@ jobs:
            run: sleep 60
          - name: Download Workflow Logs
            run: |
-            curl -L \
-              -H "Accept: application/vnd.github+json" \
+            curl -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
               -o workflow_logs.txt \
