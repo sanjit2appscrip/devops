@@ -85,8 +85,8 @@ jobs:
                              -H "Accept: application/vnd.github.v3+json" \
                              "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs")
             
-               job_name= "${{ github.job }}"
-               job_id=$(echo "$response" | jq -r ".jobs[] | select(.name == \"$job_name\") | .id")
+               $job_name= "${{ github.job }}"
+               $job_id=$(echo "$response" | jq -r ".jobs[] | select(.name == \"$job_name\") | .id")
     
                echo "Job ID for '${job_name}': $job_id"
                echo "JOB_ID=$job_id" >> $GITHUB_ENV
@@ -103,7 +103,6 @@ jobs:
            run: |
               ls -all
               cat workflow_logs.txt
-              job_name="your-job-name"  # Replace with your job name
          - name: restart
            run: |
              curl -L \
