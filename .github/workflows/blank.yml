@@ -81,15 +81,10 @@ jobs:
     steps: 
          - name: get 
            run: |
-               response=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                             -H "Accept: application/vnd.github.v3+json" \
-                             "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs")
-            
-               $job_name= "${{ github.job }}"
-               $job_id= "$(echo "$response" | jq -r ".jobs[] | select(.name == \"$job_name\") | .id")"
-    
-               echo "Job ID for '${job_name}': $job_id"
-               echo "JOB_ID=$job_id" >> $GITHUB_ENV
+              curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                   -H "Accept: application/vnd.github+json" \
+                   "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs" \
+                   | jq '.jobs[] | select(.name == "logs-download") | .id'
                
          - name: Download Workflow Logs
            run: |
