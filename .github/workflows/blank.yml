@@ -23,7 +23,10 @@ jobs:
   get_name: 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: print 
+        run: |
+          echo "sanjit swain"
+          echo "sanjana panigrahi"
 
   logs-download:
     runs-on: ubuntu-latest
