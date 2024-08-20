@@ -52,7 +52,7 @@ jobs:
 
       - name: Get Workflow Run ID
         id: get_run_id
-        run: echo "RUN_ID=${{ github.run_id }}" > run_id.txt
+        run: echo "${{ github.run_id }}" > run_id.txt
 
       - name: Upload run ID
         uses: actions/upload-artifact@v3
