@@ -27,6 +27,8 @@ jobs:
         run: |
           echo "sanjit swain"
           echo "sanjana panigrahi"
+          echo "shaddi"
+          
 
   logs-download:
     runs-on: ubuntu-latest
@@ -49,7 +51,6 @@ jobs:
             curl -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
-              -o workflow_logs.txt \
               https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/actions/jobs/${{ env.job_id }}/logs
          - name: get logs
            run: |
