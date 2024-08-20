@@ -32,10 +32,22 @@ jobs:
           echo "Running a sample job..."
           echo "This is the sample job with name: ${{ github.job }}"
           
+  get_workflow: 
+       runs-on: ubuntu-latest
+       steps:
+          - name: Check out the repository
+            uses: actions/checkout@v3
+    
+          - name: Run a sample command
+            id: run-sample
+            run: |
+              echo "Running a sample job..."
+              echo "This is the sample job with name: ${{ github.job }}"
+          
 
   logs-download:
     runs-on: ubuntu-latest
-    needs: get_name
+    needs: [get_name,get_workflow]
     outputs:
       job_id: ${{steps.job_id.outputs.job_id}}
     steps:   
@@ -46,7 +58,7 @@ jobs:
                    -H "Accept: application/vnd.github+json" \
                    "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/jobs")           
               echo $JOB_ID
-              job_id=$(echo "$JOB_ID" | jq '.jobs[] | select(.name == "get_name") | .id')
+              job_id=$(echo "$JOB_ID" | jq '.jobs[] | select(.name == "get_name,get_workflow") | .id')
               echo $job_id
               echo "job_id=$job_id" >> $GITHUB_ENV
          - name: Download Workflow Logs
