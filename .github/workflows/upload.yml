@@ -39,5 +39,14 @@ jobs:
               path: workflow.zip
           - name: get logs
             run: |
-              ls -all
-              cat run_id.txt
+              FILE_PATH="workflow.zip"
+              FILE_SIZE=$(wc -c < "$FILE_PATH")
+              echo "$FILE_SIZE"
+        
+              if [ "$FILE_SIZE" -gt 1024 ]; then
+                echo "File size is greater than 1KiB, uploading to GCP bucket..."
+              else
+                echo "File size is 1KiB or less, skipping upload."
+              fi
+                    ls -all
+                    cat run_id.txt
