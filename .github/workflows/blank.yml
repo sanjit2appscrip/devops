@@ -68,13 +68,21 @@ jobs:
               echo "job_ids=$(echo "$job_ids")" >> $GITHUB_ENV
          - name: Download Workflow Logs
            run: |   
-                for job_id in ${{ env.job_ids }}; do
-                 echo "Downloading logs for job ID: $job_id"
-                 curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                               -H "Accept: application/vnd.github+json" \
-                               "https://api.github.com/repos/${{ github.repository }}/actions/jobs/$job_id/logs" \
-                               --output "logs_$job_id.txt"
-                          echo "Downloaded logs for job ID: $job_id"
+                IFS=' ' read -r -a job_id_array <<< "${{ env.job_ids }}"
+                
+                for job_id in "${job_id_array[@]}"; do
+                  echo "Downloading logs for job ID: $job_id"
+                  curl -H "Accept: application/vnd.github+json" \
+                       -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
+                       -H "X-GitHub-Api-Version: 2022-11-28" \
+                       https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/actions/jobs/$job_id/logs \
+                       -o "workflow_logs_$job_id.zip"
+                  
+                  if [ $? -ne 0 ]; then
+                    echo "Failed to download logs for job ID: $job_id"
+                  else
+                    echo "Successfully downloaded logs for job ID: $job_id"
+                  fi
                 done
          - name: get logs
            run: |
