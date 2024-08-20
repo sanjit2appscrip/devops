@@ -63,9 +63,10 @@ jobs:
               
               job_id=$(echo "$JOB_ID" | jq -r --argjson names "$(printf '%s\n' "${JOB_NAMES[@]}" | jq -R . | jq -s .)" \
                  '.jobs[] | select(.name as $n | $names | index($n)) | .id')
+                 
+              job_ids_string=$(echo "$job_ids" | paste -sd "," -)
+              echo "job_ids=$job_ids_string" >> $GITHUB_ENV
 
-              echo $job_id
-              echo "job_ids=$(echo "$job_ids")" >> $GITHUB_ENV
          - name: Download Workflow Logs
            run: |   
                 IFS=' ' read -r -a job_id_array <<< "${{ env.job_ids }}"
