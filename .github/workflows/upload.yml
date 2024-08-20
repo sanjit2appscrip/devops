@@ -1,4 +1,4 @@
-name: CI
+name: UPLOAD
 
 # Controls when the workflow will run
 on:
