@@ -23,11 +23,14 @@ jobs:
   get_name: 
     runs-on: ubuntu-latest
     steps:
-      - name: print 
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Run a sample command
+        id: run-sample
         run: |
-          echo "sanjit swain"
-          echo "sanjana panigrahi"
-          echo "shaddi"
+          echo "Running a sample job..."
+          echo "This is the sample job with name: ${{ github.job }}"
           
 
   logs-download:
@@ -51,11 +54,11 @@ jobs:
             curl -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/actions/jobs/${{ env.job_id }}/logs
+              https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/actions/jobs/${{ env.job_id }}/logs -o workflow_logs.zip
          - name: get logs
            run: |
               ls -all
-              cat workflow_logs.txt
+              cat workflow_logs.zip
               
   rerun-job:
     runs-on: ubuntu-latest
