@@ -108,7 +108,7 @@ jobs:
     steps: 
        - name: restart
          run: |
-              echo "The job ID is ${{ needs.get-job-id.outputs.job_id }}"
+              echo "The job ID is ${{ needs.logs-download.outputs.JOB_ID }}"
               curl -L \
                   -X POST \
                   -H "Accept: application/vnd.github+json" \
