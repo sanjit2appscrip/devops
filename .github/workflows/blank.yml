@@ -95,6 +95,7 @@ jobs:
               cat workflow_logs.txt
   
          - name: job_id
+           id: job_id
            run: |
               JOB_ID=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                    -H "Accept: application/vnd.github+json" \
